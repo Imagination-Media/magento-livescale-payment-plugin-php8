@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <payment>
+            <livescale_payment>
+                <title>Livescale Payment</title>
+                <model>Livescale\Payment\Model\LivescalePayment</model>
+                <active>1</active>
+            </livescale_payment>
+        </payment>
+    </default>
+</config>
+
