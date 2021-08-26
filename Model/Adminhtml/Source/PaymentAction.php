@@ -20,7 +20,7 @@ class PaymentAction implements \Magento\Framework\Option\ArrayInterface
         return [
             [
                 'value' => AbstractMethod::ACTION_AUTHORIZE,
-                'label' => __('Authorize & Caputre Later')
+                'label' => __('Authorize')
             ],
             [
                 'value' => AbstractMethod::ACTION_AUTHORIZE_CAPTURE,
