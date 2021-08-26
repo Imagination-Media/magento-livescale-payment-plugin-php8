@@ -1,6 +1,7 @@
 {
-    "name": "livecale/magento_livescale_payment_plugin",
+    "name": "livescale/magento_livescale_payment_plugin",
     "description": "Magento Livescale Payment Plugin",
+    "keywords": ["magento2", "livescale"],
     "type": "magento2-module",
     "version": "1.0.0",
     "autoload": {
