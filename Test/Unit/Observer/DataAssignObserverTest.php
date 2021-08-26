@@ -3,15 +3,15 @@
  * Copyright © 2016 Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\PaymentGateway\Test\Unit\Observer;
+namespace Livescale\PaymentGateway\Test\Unit\Observer;
 
 use Magento\Framework\DataObject;
 use Magento\Framework\Event;
 use Magento\Payment\Model\InfoInterface;
 use Magento\Payment\Model\MethodInterface;
 use Magento\Payment\Observer\AbstractDataAssignObserver;
-use Magento\PaymentGateway\Gateway\Http\Client\ClientMock;
-use Magento\PaymentGateway\Observer\DataAssignObserver;
+use Livescale\PaymentGateway\Gateway\Http\Client\ClientMock;
+use Livescale\PaymentGateway\Observer\DataAssignObserver;
 
 class DataAssignObserverTest extends \PHPUnit_Framework_TestCase
 {

@@ -3,10 +3,10 @@
  * Copyright © 2016 Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\PaymentGateway\Model\Ui;
+namespace Livescale\PaymentGateway\Model\Ui;
 
 use Magento\Checkout\Model\ConfigProviderInterface;
-use Magento\PaymentGateway\Gateway\Http\Client\ClientMock;
+use Livescale\PaymentGateway\Gateway\Http\Client\ClientMock;
 
 /**
  * Class ConfigProvider

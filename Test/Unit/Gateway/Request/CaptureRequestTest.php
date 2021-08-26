@@ -3,13 +3,13 @@
      * Copyright © 2016 Magento. All rights reserved.
      * See COPYING.txt for license details.
      */
-namespace Magento\PaymentGateway\Test\Unit\Gateway\Request;
+namespace Livescale\PaymentGateway\Test\Unit\Gateway\Request;
 
 use Magento\Payment\Gateway\ConfigInterface;
 use Magento\Payment\Gateway\Data\OrderAdapterInterface;
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Sales\Model\Order\Payment;
-use Magento\PaymentGateway\Gateway\Request\CaptureRequest;
+use Livescale\PaymentGateway\Gateway\Request\CaptureRequest;
 
 class CaptureRequestTest extends \PHPUnit_Framework_TestCase
 {
