@@ -133,10 +133,4 @@
         </arguments>
     </virtualType>
 
-    <type name="Livescale\PaymentGateway\Block\Info">
-        <arguments>
-            <argument name="config" xsi:type="object">SamplePaymentGatewayConfig</argument>
-        </arguments>
-    </type>
-
 </config>
