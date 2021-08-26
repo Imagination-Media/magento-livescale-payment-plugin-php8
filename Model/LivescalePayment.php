@@ -97,6 +97,10 @@ class LivescalePayment extends \Magento\Payment\Model\Method\Cc
         return self::ACTION_AUTHORIZE_CAPTURE;
     }
 
+    public function isAvailable(\Magento\Quote\Api\Data\CartInterface $quote = null) {
+        return parent::isAvailable($quote);
+    }
+
     /**
      * Test method to handle an API call for authorization request.
      *
