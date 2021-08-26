@@ -8,6 +8,7 @@ class LivescalePayment extends \Magento\Payment\Model\Method\Cc
 
     protected $_code = self::CODE;
 
+    protected $_isGateway = true;
     protected $_canAuthorize = true;
     protected $_canCapture = true;
 
