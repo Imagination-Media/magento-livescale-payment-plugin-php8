@@ -12,6 +12,7 @@
         <arguments>
             <argument name="code" xsi:type="const">\Livescale\PaymentGateway\Model\Ui\ConfigProvider::CODE</argument>
             <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="string">Livescale\PaymentGateway\Block\Info</argument>
             <argument name="valueHandlerPool" xsi:type="object">SamplePaymentGatewayValueHandlerPool</argument>
             <argument name="commandPool" xsi:type="object">SamplePaymentGatewayCommandPool</argument>
         </arguments>
@@ -132,5 +133,11 @@
             <argument name="configInterface" xsi:type="object">SamplePaymentGatewayConfig</argument>
         </arguments>
     </virtualType>
+
+    <type name="Livescale\PaymentGateway\Block\Info">
+        <arguments>
+            <argument name="config" xsi:type="object">SamplePaymentGatewayConfig</argument>
+        </arguments>
+    </type>
 
 </config>
