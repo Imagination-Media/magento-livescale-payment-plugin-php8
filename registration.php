@@ -6,6 +6,6 @@
 
 \Magento\Framework\Component\ComponentRegistrar::register(
     \Magento\Framework\Component\ComponentRegistrar::MODULE,
-    'Livescale_Payment',
+    'Livescale_PaymentGateway',
     __DIR__
 );
