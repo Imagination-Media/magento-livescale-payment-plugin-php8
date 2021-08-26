@@ -18,32 +18,31 @@ class LivescalePayment extends \Magento\Payment\Model\Method\Cc
      * @param float $amount
      * @return $this
      */
-    public function authorize(\Magento\Payment\Model\InfoInterface $payment, $transaction, $amount)
+    public function authorize(\Magento\Payment\Model\InfoInterface $payment, $amount)
     {
         try {
 
-        //     ///build array of payment data for API request.
-        //     $request = [
-        //         'cc_type' => $payment->getCcType(),
-        //         'cc_exp_month' => $payment->getCcExpMonth(),
-        //         'cc_exp_year' => $payment->getCcExpYear(),
-        //         'cc_number' => $payment->getCcNumberEnc(),
-        //         'amount' => $amount
-        //     ];
+            ///build array of payment data for API request.
+            $request = [
+                'cc_type' => $payment->getCcType(),
+                'cc_exp_month' => $payment->getCcExpMonth(),
+                'cc_exp_year' => $payment->getCcExpYear(),
+                'cc_number' => $payment->getCcNumberEnc(),
+                'amount' => $amount
+            ];
 
-        //     //check if payment has been authorized
-        //     $response = $this->makeAuthRequest($request);
+            //check if payment has been authorized
+            $response = $this->makeAuthRequest($request);
 
-        // } catch (\Exception $e) {
-        //     $this->debug($payment->getData(), $e->getMessage());
-        // }
+        } catch (\Exception $e) {
+            $this->debug($payment->getData(), $e->getMessage());
+        }
 
-        if($transaction) {
+        if(isset($response['transactionID'])) {
             // Successful auth request.
             // Set the transaction id on the payment so the capture request knows auth has happened.
-            $payment->setTransactionComment($transaction.comment)
-            $payment->setTransactionId($transaction.id]);
-            $payment->setParentTransactionId($transaction.id);
+            $payment->setTransactionId($response['transactionID']);
+            $payment->setParentTransactionId($response['transactionID']);
         }
 
         //processing is not done yet.
@@ -67,16 +66,16 @@ class LivescalePayment extends \Magento\Payment\Model\Method\Cc
                 $this->authorize($payment, $amount);
             }
 
-            // //build array of payment data for API request.
-            // $request = [
-            //     'capture_amount' => $amount,
-            //     //any other fields, api key, etc.
-            // ];
+            //build array of payment data for API request.
+            $request = [
+                'capture_amount' => $amount,
+                //any other fields, api key, etc.
+            ];
 
-            // //make API request to credit card processor.
-            // $response = $this->makeCaptureRequest($request);
+            //make API request to credit card processor.
+            $response = $this->makeCaptureRequest($request);
 
-            // //todo handle response
+            //todo handle response
 
             //transaction is done.
             $payment->setIsTransactionClosed(1);
