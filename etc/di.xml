@@ -8,11 +8,10 @@
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <!-- Payment Method Facade configuration -->
-    <virtualType name="SamplePaymentGatewayFacade" type="Magento\Payment\Model\Method\Adapter">
+    <virtualType name="LivescalePaymentGatewayFacade" type="Magento\Payment\Model\Method\Adapter">
         <arguments>
             <argument name="code" xsi:type="const">\Livescale\PaymentGateway\Model\Ui\ConfigProvider::CODE</argument>
             <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
-            <argument name="infoBlockType" xsi:type="string">Livescale\PaymentGateway\Block\Info</argument>
             <argument name="valueHandlerPool" xsi:type="object">SamplePaymentGatewayValueHandlerPool</argument>
             <argument name="commandPool" xsi:type="object">SamplePaymentGatewayCommandPool</argument>
         </arguments>

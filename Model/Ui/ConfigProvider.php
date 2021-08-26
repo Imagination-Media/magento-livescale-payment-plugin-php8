@@ -27,7 +27,7 @@ final class ConfigProvider implements ConfigProviderInterface
                 self::CODE => [
                     'transactionResults' => [
                         ClientMock::SUCCESS => __('Success'),
-                        ClientMock::FAILURE => __('Fraud')
+                        ClientMock::FAILURE => __('Failed')
                     ]
                 ]
             ]

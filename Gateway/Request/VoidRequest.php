@@ -53,10 +53,6 @@ class VoidRequest implements BuilderInterface
         return [
             'TXN_TYPE' => 'V',
             'TXN_ID' => $payment->getLastTransId(),
-            'MERCHANT_KEY' => $this->config->getValue(
-                'merchant_gateway_key',
-                $order->getStoreId()
-            )
         ];
     }
 }
