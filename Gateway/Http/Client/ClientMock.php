@@ -52,7 +52,7 @@ class ClientMock implements ClientInterface
 
         $this->logger->debug(
             [
-                'transferObject' => $transferObjects,
+                'transferObject' => $transferObject,
                 'request' => $transferObject->getBody(),
                 'response' => $response
             ]
