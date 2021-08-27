@@ -43,7 +43,7 @@ class AuthorizationRequest implements BuilderInterface
     {
         $this->logger->debug(
             [
-                'buildSubject' => $buildSubject
+                'buildSubject' => $buildSubject['payment']
             ]
         );
 
