@@ -10,9 +10,9 @@
     <!-- Payment Method Facade configuration -->
     <virtualType name="LivescalePaymentGatewayFacade" type="Magento\Payment\Model\Method\Adapter">
         <arguments>
-            <argument name="code" xsi:type="const">\Livescale\PaymentGateway\Model\ConfigProvider::CODE</argument>
+            <argument name="code" xsi:type="const">\Livescale\Payment\Model\ConfigProvider::CODE</argument>
             <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
-            <argument name="infoBlockType" xsi:type="string">Livescale\PaymentGateway\Block\Info</argument>
+            <argument name="infoBlockType" xsi:type="string">Livescale\Payment\Block\Info</argument>
             <argument name="valueHandlerPool" xsi:type="object">LivescalePaymentGenericValueHandlerPool</argument>
             <argument name="commandPool" xsi:type="object">LivescalePaymentGatewayCommandPool</argument>
         </arguments>
@@ -35,7 +35,7 @@
     <!-- Configuration reader -->
     <virtualType name="LivescalePaymentGatewayConfig" type="Magento\Payment\Gateway\Config\Config">
         <arguments>
-            <argument name="methodCode" xsi:type="const">\Livescale\PaymentGateway\Model\ConfigProvider::CODE</argument>
+            <argument name="methodCode" xsi:type="const">\Livescale\Payment\Model\ConfigProvider::CODE</argument>
         </arguments>
     </virtualType>
 
@@ -46,7 +46,7 @@
         </arguments>
     </virtualType>
 
-    <type name="Livescale\PaymentGateway\Gateway\Http\Client\ClientMock">
+    <type name="Livescale\Payment\Gateway\Http\Client\ClientMock">
         <arguments>
             <argument name="logger" xsi:type="object">LivescalePaymentGatewayLogger</argument>
         </arguments>
@@ -66,16 +66,16 @@
     <!-- Authorize command -->
     <virtualType name="LivescalePaymentGatewayAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
         <arguments>
-            <argument name="requestBuilder" xsi:type="object">Livescale\PaymentGateway\Gateway\Request\AuthorizationRequest</argument>
-            <argument name="handler" xsi:type="object">Livescale\PaymentGateway\Gateway\Response\TxnIdHandler</argument>
-            <argument name="transferFactory" xsi:type="object">Livescale\PaymentGateway\Gateway\Http\TransferFactory</argument>
-            <argument name="validator" xsi:type="object">Livescale\PaymentGateway\Gateway\Validator\ResponseCodeValidator</argument>
-            <argument name="client" xsi:type="object">Livescale\PaymentGateway\Gateway\Http\Client\ClientMock</argument>
+            <argument name="requestBuilder" xsi:type="object">Livescale\Payment\Gateway\Request\AuthorizationRequest</argument>
+            <argument name="handler" xsi:type="object">Livescale\Payment\Gateway\Response\TxnIdHandler</argument>
+            <argument name="transferFactory" xsi:type="object">Livescale\Payment\Gateway\Http\TransferFactory</argument>
+            <argument name="validator" xsi:type="object">Livescale\Payment\Gateway\Validator\ResponseCodeValidator</argument>
+            <argument name="client" xsi:type="object">Livescale\Payment\Gateway\Http\Client\ClientMock</argument>
         </arguments>
     </virtualType>
 
     <!-- Authorization Request -->
-    <type name="Livescale\PaymentGateway\Gateway\Request\AuthorizationRequest">
+    <type name="Livescale\Payment\Gateway\Request\AuthorizationRequest">
         <arguments>
             <argument name="config" xsi:type="object">LivescalePaymentGatewayConfig</argument>
         </arguments>
@@ -84,16 +84,16 @@
     <!-- Capture command -->
     <virtualType name="LivescalePaymentGatewayCaptureCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
         <arguments>
-            <argument name="requestBuilder" xsi:type="object">Livescale\PaymentGateway\Gateway\Request\CaptureRequest</argument>
-            <argument name="handler" xsi:type="object">Livescale\PaymentGateway\Gateway\Response\TxnIdHandler</argument>
-            <argument name="transferFactory" xsi:type="object">Livescale\PaymentGateway\Gateway\Http\TransferFactory</argument>
-            <argument name="validator" xsi:type="object">Livescale\PaymentGateway\Gateway\Validator\ResponseCodeValidator</argument>
-            <argument name="client" xsi:type="object">Livescale\PaymentGateway\Gateway\Http\Client\ClientMock</argument>
+            <argument name="requestBuilder" xsi:type="object">Livescale\Payment\Gateway\Request\CaptureRequest</argument>
+            <argument name="handler" xsi:type="object">Livescale\Payment\Gateway\Response\TxnIdHandler</argument>
+            <argument name="transferFactory" xsi:type="object">Livescale\Payment\Gateway\Http\TransferFactory</argument>
+            <argument name="validator" xsi:type="object">Livescale\Payment\Gateway\Validator\ResponseCodeValidator</argument>
+            <argument name="client" xsi:type="object">Livescale\Payment\Gateway\Http\Client\ClientMock</argument>
         </arguments>
     </virtualType>
 
     <!-- Capture Request -->
-    <type name="Livescale\PaymentGateway\Gateway\Request\CaptureRequest">
+    <type name="Livescale\Payment\Gateway\Request\CaptureRequest">
         <arguments>
             <argument name="config" xsi:type="object">LivescalePaymentGatewayConfig</argument>
         </arguments>
@@ -102,16 +102,16 @@
     <!-- Void command -->
     <virtualType name="LivescalePaymentGatewayVoidCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
         <arguments>
-            <argument name="requestBuilder" xsi:type="object">Livescale\PaymentGateway\Gateway\Request\VoidRequest</argument>
-            <argument name="handler" xsi:type="object">Livescale\PaymentGateway\Gateway\Response\TxnIdHandler</argument>
-            <argument name="transferFactory" xsi:type="object">Livescale\PaymentGateway\Gateway\Http\TransferFactory</argument>
-            <argument name="validator" xsi:type="object">Livescale\PaymentGateway\Gateway\Validator\ResponseCodeValidator</argument>
-            <argument name="client" xsi:type="object">Livescale\PaymentGateway\Gateway\Http\Client\ClientMock</argument>
+            <argument name="requestBuilder" xsi:type="object">Livescale\Payment\Gateway\Request\VoidRequest</argument>
+            <argument name="handler" xsi:type="object">Livescale\Payment\Gateway\Response\TxnIdHandler</argument>
+            <argument name="transferFactory" xsi:type="object">Livescale\Payment\Gateway\Http\TransferFactory</argument>
+            <argument name="validator" xsi:type="object">Livescale\Payment\Gateway\Validator\ResponseCodeValidator</argument>
+            <argument name="client" xsi:type="object">Livescale\Payment\Gateway\Http\Client\ClientMock</argument>
         </arguments>
     </virtualType>
 
     <!-- Void Request -->
-    <type name="Livescale\PaymentGateway\Gateway\Request\VoidRequest">
+    <type name="Livescale\Payment\Gateway\Request\VoidRequest">
         <arguments>
             <argument name="config" xsi:type="object">LivescalePaymentGatewayConfig</argument>
         </arguments>

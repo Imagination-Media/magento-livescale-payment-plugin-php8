@@ -3,7 +3,7 @@
  * Copyright © 2016 Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Livescale\PaymentGateway\Model;
+namespace Livescale\Payment\Model;
 
 use Magento\Checkout\Model\ConfigProviderInterface;
 
