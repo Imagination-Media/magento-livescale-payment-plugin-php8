@@ -82,7 +82,7 @@ class ClientMock implements ClientInterface
      */
     protected function generateTxnId()
     {
-        return md5(mt_rand(0, 1000));
+        return '123456789';
     }
 
     /**
