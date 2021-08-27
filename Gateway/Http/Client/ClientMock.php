@@ -52,6 +52,7 @@ class ClientMock implements ClientInterface
 
         $this->logger->debug(
             [
+                'transferObject' => $transferObjects,
                 'request' => $transferObject->getBody(),
                 'response' => $response
             ]
@@ -99,7 +100,7 @@ class ClientMock implements ClientInterface
             return (int)$headers['force_result'];
         }
 
-        return $this->results[mt_rand(0, 1)];
+        return self::SUCCESS;
     }
 
     /**
