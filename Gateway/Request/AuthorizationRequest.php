@@ -41,12 +41,6 @@ class AuthorizationRequest implements BuilderInterface
      */
     public function build(array $buildSubject)
     {
-        $this->logger->debug(
-            [
-                'buildSubject' => $buildSubject['payment']
-            ]
-        );
-
         if (!isset($buildSubject['payment'])
             || !$buildSubject['payment'] instanceof PaymentDataObjectInterface
         ) {
@@ -57,6 +51,12 @@ class AuthorizationRequest implements BuilderInterface
         $payment = $buildSubject['payment'];
         $order = $payment->getOrder();
         $address = $order->getShippingAddress();
+
+        $this->logger->debug(
+            [
+                '$address' => $address
+            ]
+        );
 
         return [
             'TXN_TYPE' => 'A',

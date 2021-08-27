@@ -42,12 +42,6 @@ class CaptureRequest implements BuilderInterface
      */
     public function build(array $buildSubject)
     {
-        $this->logger->debug(
-            [
-                'buildSubject' => $buildSubject['payment']
-            ]
-        );
-
         if (!isset($buildSubject['payment'])
             || !$buildSubject['payment'] instanceof PaymentDataObjectInterface
         ) {
@@ -60,6 +54,12 @@ class CaptureRequest implements BuilderInterface
         $order = $paymentDO->getOrder();
 
         $payment = $paymentDO->getPayment();
+
+        $this->logger->debug(
+            [
+                '$payment' => $payment
+            ]
+        );
 
         if (!$payment instanceof OrderPaymentInterface) {
             throw new \LogicException('Order payment should be provided.');
