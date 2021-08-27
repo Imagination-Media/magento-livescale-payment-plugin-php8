@@ -54,7 +54,7 @@ class AuthorizationRequest implements BuilderInterface
 
         $this->logger->debug(
             [
-                '$address' => $address
+                'step' => 'authorize'
             ]
         );
 

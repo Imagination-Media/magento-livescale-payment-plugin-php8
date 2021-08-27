@@ -57,7 +57,7 @@ class CaptureRequest implements BuilderInterface
 
         $this->logger->debug(
             [
-                '$payment' => $payment
+                'step' => 'capture'
             ]
         );
 
