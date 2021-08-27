@@ -8,13 +8,13 @@
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <!-- Payment Method Facade configuration -->
-    <virtualType name="LivescalePaymentGatewayFacade" type="Magento\Payment\Model\Method\Adapter">
+    <virtualType name="LivescalePaymentFacade" type="Magento\Payment\Model\Method\Adapter">
         <arguments>
             <argument name="code" xsi:type="const">\Livescale\Payment\Model\ConfigProvider::CODE</argument>
             <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
             <argument name="infoBlockType" xsi:type="string">Livescale\Payment\Block\Info</argument>
             <argument name="valueHandlerPool" xsi:type="object">LivescalePaymentGenericValueHandlerPool</argument>
-            <argument name="commandPool" xsi:type="object">LivescalePaymentGatewayCommandPool</argument>
+            <argument name="commandPool" xsi:type="object">LivescalePaymentCommandPool</argument>
         </arguments>
     </virtualType>
 
@@ -28,43 +28,43 @@
 
     <virtualType name="LivescalePaymentGenericConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
         <arguments>
-            <argument name="configInterface" xsi:type="object">LivescalePaymentGatewayConfig</argument>
+            <argument name="configInterface" xsi:type="object">LivescalePaymentConfig</argument>
         </arguments>
     </virtualType>
 
     <!-- Configuration reader -->
-    <virtualType name="LivescalePaymentGatewayConfig" type="Magento\Payment\Gateway\Config\Config">
+    <virtualType name="LivescalePaymentConfig" type="Magento\Payment\Gateway\Config\Config">
         <arguments>
             <argument name="methodCode" xsi:type="const">\Livescale\Payment\Model\ConfigProvider::CODE</argument>
         </arguments>
     </virtualType>
 
-    <!-- Logger, initialized with LivescalePaymentGatewayConfig -->
-    <virtualType name="LivescalePaymentGatewayLogger" type="Magento\Payment\Model\Method\Logger">
+    <!-- Logger, initialized with LivescalePaymentConfig -->
+    <virtualType name="LivescalePaymentLogger" type="Magento\Payment\Model\Method\Logger">
         <arguments>
-            <argument name="config" xsi:type="object">LivescalePaymentGatewayConfig</argument>
+            <argument name="config" xsi:type="object">LivescalePaymentConfig</argument>
         </arguments>
     </virtualType>
 
     <type name="Livescale\Payment\Gateway\Http\Client\ClientMock">
         <arguments>
-            <argument name="logger" xsi:type="object">LivescalePaymentGatewayLogger</argument>
+            <argument name="logger" xsi:type="object">LivescalePaymentLogger</argument>
         </arguments>
     </type>
 
     <!-- Commands infrastructure -->
-    <virtualType name="LivescalePaymentGatewayCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+    <virtualType name="LivescalePaymentCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
         <arguments>
             <argument name="commands" xsi:type="array">
-                <item name="authorize" xsi:type="string">LivescalePaymentGatewayAuthorizeCommand</item>
-                <item name="capture" xsi:type="string">LivescalePaymentGatewayCaptureCommand</item>
-                <item name="void" xsi:type="string">LivescalePaymentGatewayVoidCommand</item>
+                <item name="authorize" xsi:type="string">LivescalePaymentAuthorizeCommand</item>
+                <item name="capture" xsi:type="string">LivescalePaymentCaptureCommand</item>
+                <item name="void" xsi:type="string">LivescalePaymentVoidCommand</item>
             </argument>
         </arguments>
     </virtualType>
 
     <!-- Authorize command -->
-    <virtualType name="LivescalePaymentGatewayAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+    <virtualType name="LivescalePaymentAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
         <arguments>
             <argument name="requestBuilder" xsi:type="object">Livescale\Payment\Gateway\Request\AuthorizationRequest</argument>
             <argument name="handler" xsi:type="object">Livescale\Payment\Gateway\Response\TxnIdHandler</argument>
@@ -77,12 +77,12 @@
     <!-- Authorization Request -->
     <type name="Livescale\Payment\Gateway\Request\AuthorizationRequest">
         <arguments>
-            <argument name="config" xsi:type="object">LivescalePaymentGatewayConfig</argument>
+            <argument name="config" xsi:type="object">LivescalePaymentConfig</argument>
         </arguments>
     </type>
 
     <!-- Capture command -->
-    <virtualType name="LivescalePaymentGatewayCaptureCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+    <virtualType name="LivescalePaymentCaptureCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
         <arguments>
             <argument name="requestBuilder" xsi:type="object">Livescale\Payment\Gateway\Request\CaptureRequest</argument>
             <argument name="handler" xsi:type="object">Livescale\Payment\Gateway\Response\TxnIdHandler</argument>
@@ -95,12 +95,12 @@
     <!-- Capture Request -->
     <type name="Livescale\Payment\Gateway\Request\CaptureRequest">
         <arguments>
-            <argument name="config" xsi:type="object">LivescalePaymentGatewayConfig</argument>
+            <argument name="config" xsi:type="object">LivescalePaymentConfig</argument>
         </arguments>
     </type>
 
     <!-- Void command -->
-    <virtualType name="LivescalePaymentGatewayVoidCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+    <virtualType name="LivescalePaymentVoidCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
         <arguments>
             <argument name="requestBuilder" xsi:type="object">Livescale\Payment\Gateway\Request\VoidRequest</argument>
             <argument name="handler" xsi:type="object">Livescale\Payment\Gateway\Response\TxnIdHandler</argument>
@@ -113,7 +113,7 @@
     <!-- Void Request -->
     <type name="Livescale\Payment\Gateway\Request\VoidRequest">
         <arguments>
-            <argument name="config" xsi:type="object">LivescalePaymentGatewayConfig</argument>
+            <argument name="config" xsi:type="object">LivescalePaymentConfig</argument>
         </arguments>
     </type>
 </config>

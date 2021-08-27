@@ -12,7 +12,7 @@
                 <debug>1</debug>
                 <active>1</active>
                 <title>Livescale Payment</title>
-                <model>LivescalePaymentGatewayFacade</model>
+                <model>LivescalePaymentFacade</model>
                 <order_status>pending_payment</order_status>
                 <payment_action>authorize_capture</payment_action>
                 <can_authorize>1</can_authorize>
