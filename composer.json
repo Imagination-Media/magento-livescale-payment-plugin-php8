@@ -1,5 +1,5 @@
 {
-    "name": "livescale/magento_livescale_payment_plugin",
+    "name": "livescale/magento-livescale-payment-plugin",
     "description": "Magento Livescale Payment Plugin",
     "keywords": ["magento2", "livescale"],
     "require": {
