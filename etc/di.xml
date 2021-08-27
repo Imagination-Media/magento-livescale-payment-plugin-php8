@@ -53,7 +53,7 @@
     <virtualType name="LivescalePaymentGatewayAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
         <arguments>
             <argument name="requestBuilder" xsi:type="object">LivescalePaymentGatewayAuthorizationRequest</argument>
-            <argument name="handler" xsi:type="object">LivescalePaymentGatewayResponseHandlerComposite</argument>
+            <argument name="handler" xsi:type="object">Livescale\PaymentGateway\Gateway\Response\TxnIdHandler</argument>
             <argument name="transferFactory" xsi:type="object">Livescale\PaymentGateway\Gateway\Http\TransferFactory</argument>
             <argument name="client" xsi:type="object">Livescale\PaymentGateway\Gateway\Http\Client\ClientMock</argument>
         </arguments>
@@ -68,6 +68,7 @@
             </argument>
         </arguments>
     </virtualType>
+
     <type name="Livescale\PaymentGateway\Gateway\Request\AuthorizationRequest">
         <arguments>
             <argument name="config" xsi:type="object">LivescalePaymentGatewayConfig</argument>
@@ -110,16 +111,6 @@
         </arguments>
     </type>
 
-    <!-- Response handlers -->
-    <virtualType name="LivescalePaymentGatewayResponseHandlerComposite" type="Magento\Payment\Gateway\Response\HandlerChain">
-        <arguments>
-            <argument name="handlers" xsi:type="array">
-                <item name="txnid" xsi:type="string">Livescale\PaymentGateway\Gateway\Response\TxnIdHandler</item>
-                <item name="fraud" xsi:type="string">Livescale\PaymentGateway\Gateway\Response\FraudHandler</item>
-            </argument>
-        </arguments>
-    </virtualType>
-
     <!-- Value handlers infrastructure -->
     <virtualType name="LivescalePaymentGatewayValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
         <arguments>
@@ -128,6 +119,7 @@
             </argument>
         </arguments>
     </virtualType>
+
     <virtualType name="LivescalePaymentGatewayConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
         <arguments>
             <argument name="configInterface" xsi:type="object">LivescalePaymentGatewayConfig</argument>
