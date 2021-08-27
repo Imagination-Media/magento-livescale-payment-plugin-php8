@@ -9,6 +9,7 @@ use Magento\Payment\Gateway\ConfigInterface;
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Request\BuilderInterface;
 use Magento\Sales\Api\Data\OrderPaymentInterface;
+use Magento\Payment\Model\Method\Logger;
 
 class CaptureRequest implements BuilderInterface
 {
@@ -18,12 +19,19 @@ class CaptureRequest implements BuilderInterface
     private $config;
 
     /**
+     * @var Logger
+     */
+    private $logger;
+
+    /**
      * @param ConfigInterface $config
      */
     public function __construct(
-        ConfigInterface $config
+        ConfigInterface $config,
+        Logger $logger
     ) {
         $this->config = $config;
+        $this->logger = $logger;
     }
 
     /**
@@ -34,6 +42,12 @@ class CaptureRequest implements BuilderInterface
      */
     public function build(array $buildSubject)
     {
+        $this->logger->debug(
+            [
+                'buildSubject' => $buildSubject
+            ]
+        );
+
         if (!isset($buildSubject['payment'])
             || !$buildSubject['payment'] instanceof PaymentDataObjectInterface
         ) {

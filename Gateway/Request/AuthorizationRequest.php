@@ -8,6 +8,7 @@ namespace Livescale\PaymentGateway\Gateway\Request;
 use Magento\Payment\Gateway\ConfigInterface;
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Request\BuilderInterface;
+use Magento\Payment\Model\Method\Logger;
 
 class AuthorizationRequest implements BuilderInterface
 {
@@ -17,12 +18,19 @@ class AuthorizationRequest implements BuilderInterface
     private $config;
 
     /**
+     * @var Logger
+     */
+    private $logger;
+
+    /**
      * @param ConfigInterface $config
      */
     public function __construct(
-        ConfigInterface $config
+        ConfigInterface $config,
+        Logger $logger
     ) {
         $this->config = $config;
+        $this->logger = $logger;
     }
 
     /**
@@ -33,6 +41,12 @@ class AuthorizationRequest implements BuilderInterface
      */
     public function build(array $buildSubject)
     {
+        $this->logger->debug(
+            [
+                'buildSubject' => $buildSubject
+            ]
+        );
+
         if (!isset($buildSubject['payment'])
             || !$buildSubject['payment'] instanceof PaymentDataObjectInterface
         ) {
