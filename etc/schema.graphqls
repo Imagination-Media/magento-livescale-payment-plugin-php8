@@ -1,0 +1,13 @@
+type Mutation {
+    authorizePayment(input: AuthorizePaymentInput): AuthorizePaymentOutput @resolver(class: "\\Livescale\\Payment\\Model\\AuthorizePayment")
+}
+
+input AuthorizePaymentInput {
+    cart_id: String!
+    gateway_transaction_id: String!
+    gateway_name: String!
+}
+
+type AuthorizePaymentOutput {
+   cart: Cart! @resolver (class: "\\Magento\\QuoteGraphQl\\Model\\Resolver\\Cart")
+}
