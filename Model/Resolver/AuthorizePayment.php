@@ -60,7 +60,7 @@ class AuthorizePayment implements ResolverInterface
 
       /** @var $quoteIdMask QuoteIdMask */
       $quoteIdMask = $this->quoteIdMaskFactory->create()->load($cartId, 'masked_id');
-      $quote = $this->quoteRepository->get($quoteIdMask);
+      $quote = $this->quoteRepository->get($quoteIdMask->getQuoteId());
       $this->logger->debug([
         'quote' => $quote
       ]);
