@@ -90,8 +90,9 @@ class AuthorizePayment implements ResolverInterface
       $payment = $quote->getPayment();
 
       /** @var $payment \Magento\Sales\Model\Order\Payment */
-      // $payment->setTransactionId($gatewayTransactionId);
-      // $payment->setIsTransactionClosed(false);
+      $payment->setTransactionId($gatewayTransactionId);
+      $payment->setTransactionAdditionalInfo('gateway_name', $gatewayName);
+      $payment->setIsTransactionClosed(false);
 
       $paymentId = $payment->getId();
       $this->logger->debug([
@@ -119,7 +120,7 @@ class AuthorizePayment implements ResolverInterface
 
       return [
         'cart' => [
-            'model' => $cart,
+            'model' => $cart
         ],
     ];
     }
