@@ -71,9 +71,13 @@ class AuthorizePayment implements ResolverInterface
       }
 
       $cartId = $args['input']['cart_id'];
+      $gatewayTransactionId = $args['input']['gateway_transaction_id'];
+      $gatewayName = $args['input']['gateway_name'];
 
       $this->logger->debug([
-        'cartId' => $cartId
+        'cartId' => $cartId,
+        'gatewayTransactionId' => $gatewayTransactionId,
+        'gatewayName' => $gatewayName
       ]);
 
       /** @var $quoteIdMask QuoteIdMask */
@@ -84,6 +88,11 @@ class AuthorizePayment implements ResolverInterface
       ]);
 
       $payment = $quote->getPayment();
+
+      /** @var $payment \Magento\Sales\Model\Order\Payment */
+      // $payment->setTransactionId($gatewayTransactionId);
+      // $payment->setIsTransactionClosed(false);
+
       $paymentId = $payment->getId();
       $this->logger->debug([
         'paymentId' => $paymentId
@@ -93,12 +102,21 @@ class AuthorizePayment implements ResolverInterface
       $this->logger->debug([
         'currentUserId' => $currentUserId
       ]);
+
+      if ($currentUserId !== 0) {
+        throw new GraphQlInputException(__('The request is not allowed for logged in customers'));
+      }
+
       $storeId = (int)$context->getExtensionAttributes()->getStore()->getId();
       $this->logger->debug([
         'storeId' => $storeId
       ]);
       $cart = $this->getCartForUser->execute($cartId, $currentUserId, $storeId);
-      
+
+      $this->logger->debug([
+        'passGetCartForUser' => 'true'
+      ]);
+
       return [
         'cart' => [
             'model' => $cart,
