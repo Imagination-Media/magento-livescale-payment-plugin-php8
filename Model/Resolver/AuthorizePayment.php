@@ -80,14 +80,10 @@ class AuthorizePayment implements ResolverInterface
       $quoteIdMask = $this->quoteIdMaskFactory->create()->load($cartId, 'masked_id');
       $quote = $this->quoteRepository->get($quoteIdMask->getQuoteId());
       $this->logger->debug([
-        'quote' => $quote
+        'quoteId' => $quoteIdMask->getQuoteId()
       ]);
 
       $payment = $quote->getPayment();
-      $this->logger->debug([
-        'payment' => $payment
-      ]);
-
       $paymentId = $payment->getId();
       $this->logger->debug([
         'paymentId' => $paymentId
@@ -102,10 +98,7 @@ class AuthorizePayment implements ResolverInterface
         'storeId' => $storeId
       ]);
       $cart = $this->getCartForUser->execute($cartId, $currentUserId, $storeId);
-      $this->logger->debug([
-        'cart' => $cart
-      ]);
-
+      
       return [
         'cart' => [
             'model' => $cart,
