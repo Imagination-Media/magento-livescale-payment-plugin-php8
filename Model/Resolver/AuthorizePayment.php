@@ -9,7 +9,9 @@ use Magento\Framework\GraphQl\Exception\GraphQlInputException;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
+use Magento\Quote\Model\QuoteIdMask;
 use Magento\Quote\Api\CartRepositoryInterface;
+use Magento\Quote\Model\QuoteIdMaskFactory;
 use Magento\Payment\Model\Method\Logger;
 
 /**
@@ -27,10 +29,12 @@ class AuthorizePayment implements ResolverInterface
      */
     public function __construct(
         Logger $logger,
-        CartRepositoryInterface $quoteRepository
+        CartRepositoryInterface $quoteRepository,
+        QuoteIdMaskFactory $quoteIdMaskFactory
     ) {
         $this->logger = $logger;
         $this->quoteRepository = $quoteRepository;
+        $this->quoteIdMaskFactory = $quoteIdMaskFactory;
     }
 
     /**
@@ -54,6 +58,8 @@ class AuthorizePayment implements ResolverInterface
         'maskedCartId' => $maskedCartId
       ]);
 
+      /** @var $quoteIdMask QuoteIdMask */
+      $quoteIdMask = $this->quoteIdMaskFactory->create()->load($cartId, 'masked_id');
       $quote = $this->quoteRepository->get($maskedCartId);
       $this->logger->debug([
         'quote' => $quote
@@ -66,7 +72,7 @@ class AuthorizePayment implements ResolverInterface
 
       $paymentId = $payment->getId();
       $this->logger->debug([
-            'paymentId' => $paymentId
+        'paymentId' => $paymentId
       ]);
 
       $currentUserId = $context->getUserId();
