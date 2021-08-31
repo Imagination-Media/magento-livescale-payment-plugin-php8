@@ -52,15 +52,15 @@ class AuthorizePayment implements ResolverInterface
         throw new GraphQlInputException(__('Required parameter "gateway_name" is missing'));
       }
 
-      $maskedCartId = $args['input']['cart_id'];
+      $cartId = $args['input']['cart_id'];
 
       $this->logger->debug([
-        'maskedCartId' => $maskedCartId
+        'cartId' => $cartId
       ]);
 
       /** @var $quoteIdMask QuoteIdMask */
       $quoteIdMask = $this->quoteIdMaskFactory->create()->load($cartId, 'masked_id');
-      $quote = $this->quoteRepository->get($maskedCartId);
+      $quote = $this->quoteRepository->get($quoteIdMask);
       $this->logger->debug([
         'quote' => $quote
       ]);
@@ -88,7 +88,7 @@ class AuthorizePayment implements ResolverInterface
       $this->logger->debug([
         'storeId' => $storeId
       ]);
-      $cart = $this->getCartForUser->execute($maskedCartId, $currentUserId, $storeId);
+      $cart = $this->getCartForUser->execute($cartId, $currentUserId, $storeId);
       $this->logger->debug([
         'cart' => $cart
       ]);
