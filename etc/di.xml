@@ -118,4 +118,11 @@
             <argument name="config" xsi:type="object">LivescalePaymentConfig</argument>
         </arguments>
     </type>
+
+    <!-- Authorization Payment GraphQL Mutation -->
+    <type name="Livescale\Payment\Model\Resolver\AuthorizePayment">
+        <arguments>
+            <argument name="logger" xsi:type="object">LivescalePaymentLogger</argument>
+        </arguments>
+    </type>
 </config>

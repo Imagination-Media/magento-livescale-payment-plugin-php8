@@ -12,6 +12,7 @@ use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Magento\Quote\Model\QuoteIdMask;
 use Magento\Quote\Api\CartRepositoryInterface;
 use Magento\Quote\Model\QuoteIdMaskFactory;
+use Magento\QuoteGraphQl\Model\Cart\GetCartForUser;
 use Magento\Payment\Model\Method\Logger;
 
 /**
@@ -25,14 +26,31 @@ class AuthorizePayment implements ResolverInterface
     private $logger;
 
     /**
+     * @var GetCartForUser
+     */
+    private $getCartForUser;
+
+    /**
+     * @var CartRepositoryInterface
+     */
+    private $quoteRepository;
+
+    /**
+     * @var QuoteIdMaskFactory
+     */
+    private $quoteIdMaskFactory;
+
+    /**
      * @param Logger $logger
      */
     public function __construct(
         Logger $logger,
+        GetCartForUser $getCartForUser,
         CartRepositoryInterface $quoteRepository,
         QuoteIdMaskFactory $quoteIdMaskFactory
     ) {
         $this->logger = $logger;
+        $this->getCartForUser = $getCartForUser;
         $this->quoteRepository = $quoteRepository;
         $this->quoteIdMaskFactory = $quoteIdMaskFactory;
     }
@@ -79,11 +97,6 @@ class AuthorizePayment implements ResolverInterface
       $this->logger->debug([
         'currentUserId' => $currentUserId
       ]);
-
-      if ($currentUserId !== 0) {
-          throw new GraphQlInputException(__('The request is not allowed for logged in customers'));
-      }
-
       $storeId = (int)$context->getExtensionAttributes()->getStore()->getId();
       $this->logger->debug([
         'storeId' => $storeId
