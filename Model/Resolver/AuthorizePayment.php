@@ -50,22 +50,42 @@ class AuthorizePayment implements ResolverInterface
 
       $maskedCartId = $args['input']['cart_id'];
 
+      $this->logger->debug([
+        'maskedCartId' => $maskedCartId
+      ]);
+
       $quote = $this->quoteRepository->get($maskedCartId);
+      $this->logger->debug([
+        'quote' => $quote
+      ]);
+
       $payment = $quote->getPayment();
+      $this->logger->debug([
+        'payment' => $payment
+      ]);
+
       $paymentId = $payment->getId();
-      
       $this->logger->debug([
             'paymentId' => $paymentId
       ]);
 
       $currentUserId = $context->getUserId();
+      $this->logger->debug([
+        'currentUserId' => $currentUserId
+      ]);
 
       if ($currentUserId !== 0) {
           throw new GraphQlInputException(__('The request is not allowed for logged in customers'));
       }
 
       $storeId = (int)$context->getExtensionAttributes()->getStore()->getId();
+      $this->logger->debug([
+        'storeId' => $storeId
+      ]);
       $cart = $this->getCartForUser->execute($maskedCartId, $currentUserId, $storeId);
+      $this->logger->debug([
+        'cart' => $cart
+      ]);
 
       return [
         'cart' => [
