@@ -3,10 +3,13 @@
  * Copyright © 2016 Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Livescale\Payment\Model;
+namespace Livescale\Payment\Model\Resolver;
 
 use Magento\Framework\GraphQl\Exception\GraphQlInputException;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
+use Magento\Framework\GraphQl\Config\Element\Field;
+use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
+use Magento\Quote\Api\CartRepositoryInterface;
 use Magento\Payment\Model\Method\Logger;
 
 /**
@@ -24,7 +27,7 @@ class AuthorizePayment implements ResolverInterface
      */
     public function __construct(
         Logger $logger,
-        \Magento\Quote\Api\CartRepositoryInterface $quoteRepository
+        CartRepositoryInterface $quoteRepository
     ) {
         $this->logger = $logger;
         $this->quoteRepository = $quoteRepository;

@@ -1,5 +1,5 @@
 type Mutation {
-    authorizePayment(input: AuthorizePaymentInput): AuthorizePaymentOutput @resolver(class: "\\Livescale\\Payment\\Model\\AuthorizePayment")
+    authorizePayment(input: AuthorizePaymentInput): AuthorizePaymentOutput @resolver(class: "\\Livescale\\Payment\\Model\\Resolver\\AuthorizePayment")
 }
 
 input AuthorizePaymentInput {
