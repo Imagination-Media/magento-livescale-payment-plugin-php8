@@ -13,6 +13,8 @@ use Magento\Quote\Model\QuoteIdMask;
 use Magento\Quote\Api\CartRepositoryInterface;
 use Magento\Quote\Model\QuoteIdMaskFactory;
 use Magento\QuoteGraphQl\Model\Cart\GetCartForUser;
+use Magento\Sales\Model\Order\Payment\Transaction;
+
 use Magento\Payment\Model\Method\Logger;
 
 /**
@@ -90,7 +92,10 @@ class AuthorizePayment implements ResolverInterface
       $payment = $quote->getPayment();
 
       /** @var $payment \Magento\Sales\Model\Order\Payment */
+
+      $payment->addTransaction(Transaction::TYPE_AUTH);
       $payment->setTransactionId($gatewayTransactionId);
+      $payment->setParentTransactionId($gatewayTransactionId);
       $payment->setTransactionAdditionalInfo('gateway_name', $gatewayName);
       $payment->setIsTransactionClosed(false);
 
@@ -114,8 +119,13 @@ class AuthorizePayment implements ResolverInterface
       ]);
       $cart = $this->getCartForUser->execute($cartId, $currentUserId, $storeId);
 
+
+      $transactionId = $payment->getTransactionId();
+      $parentTransactionId = $payment->getParentTransactionId();
+
       $this->logger->debug([
-        'passGetCartForUser' => 'true'
+        'transactionId' => $transactionId,
+        'parentTransactionId' => $parentTransactionId
       ]);
 
       return [
