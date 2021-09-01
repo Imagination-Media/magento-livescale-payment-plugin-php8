@@ -25,7 +25,7 @@ use Magento\Payment\Model\Method\Logger;
 /**
  * @inheritdoc
  */
-class PlaceOrder implements ResolverInterface
+class SetGatewayTransactionId implements ResolverInterface
 {
     /**
      * @var Logger
