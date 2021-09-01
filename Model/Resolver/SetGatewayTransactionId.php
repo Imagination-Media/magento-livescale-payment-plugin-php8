@@ -86,8 +86,8 @@ class SetGatewayTransactionId implements ResolverInterface
     public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
     {
         $this->logger->debug([
-            'args' => $args,
-            'value' => $value,
+            'field' => $field,
+            'context' => $context,
           ]);
         $maskedCartId = $args['input']['cart_id'];
         $gatewayTransactionId = $args['input']['gateway_transaction_id'];
