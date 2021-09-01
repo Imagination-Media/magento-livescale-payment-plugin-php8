@@ -1,7 +1,12 @@
-input PlaceOrderInput {
-    gateway_transaction_id: String
+type Mutation {
+    setGatewayTransactionId(input: SetGatewayTransactionIdInput): SetGatewayTransactionIdOutput @resolver(class: "\\Livescale\\Payment\\Model\\Resolver\\SetGatewayTransactionId")
 }
 
-type Order {
-    gateway_transaction_id: String @resolver(class: "\\Livescale\\Payment\\Model\\Resolver\\SetGatewayTransactionId")
+input SetGatewayTransactionIdInput {
+    order_number: String!
+    gateway_transaction_id: String!
+}
+
+type SetGatewayTransactionIdOutput {
+    succeed: Boolean!
 }

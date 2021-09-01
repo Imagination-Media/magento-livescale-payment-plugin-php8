@@ -85,40 +85,34 @@ class SetGatewayTransactionId implements ResolverInterface
      */
     public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
     {
-        $this->logger->debug([
-            'info' => $info
-          ]);
-        $maskedCartId = $args['input']['cart_id'];
-        $gatewayTransactionId = $args['input']['gateway_transaction_id'];
-
-        $storeId = (int)$context->getExtensionAttributes()->getStore()->getId();
-        $cart = $this->getCartForUser->execute($maskedCartId, $context->getUserId(), $storeId);
-        $this->checkCartCheckoutAllowance->execute($cart);
-
-        if ((int)$context->getUserId() === 0) {
-            if (!$cart->getCustomerEmail()) {
-                throw new GraphQlInputException(__("Guest email for cart is missing."));
-            }
-            $cart->setCheckoutMethod(CartManagementInterface::METHOD_GUEST);
+        if (empty($args['input']['order_number'])) {
+            throw new GraphQlInputException(__('Required parameter "order_number" is missing'));
         }
 
+        if (empty($args['input']['gateway_transaction_id'])) {
+            throw new GraphQlInputException(__('Required parameter "gateway_transaction_id" is missing'));
+        }
+
+        $orderNumber = $args['input']['order_number'];
+        $gatewayTransactionId = $args['input']['gateway_transaction_id'];
+
+        $this->logger->debug([
+            'orderNumber' => $orderNumber,
+            'gateway_transaction_id' => $gatewayTransactionId
+          ]);
+
         try {
-            $cartId = $cart->getId();
-            // $orderId = $this->cartManagement->placeOrder($cartId, $this->paymentMethodManagement->get($cartId));
-            // $order = $this->orderRepository->get($orderId);
+            $order = $this->orderRepository->get($orderId);
 
-            // $payment = $order->getPayment();
-
-            // $paymentId = $payment->getId();
+            $payment = $order->getPayment();
+            $paymentId = $payment->getId();
             $this->logger->debug([
               'gateway_transaction_id' => $gatewayTransactionId,
               'paymentId' => $paymentId
             ]);
 
             return [
-                'order' => [
-                    'gateway_transaction_id' => $gatewayTransactionId
-                ],
+                'succeed' => true,
             ];
         } catch (NoSuchEntityException $e) {
             throw new GraphQlNoSuchEntityException(__($e->getMessage()), $e);
