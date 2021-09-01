@@ -102,7 +102,7 @@ class SetGatewayTransactionId implements ResolverInterface
           ]);
 
         try {
-            $order = $this->orderRepository->get($orderId);
+            $order = $this->orderRepository->get($orderNumber);
 
             $payment = $order->getPayment();
             $paymentId = $payment->getId();
