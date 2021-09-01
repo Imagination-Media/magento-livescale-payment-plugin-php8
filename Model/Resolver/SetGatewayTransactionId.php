@@ -85,14 +85,11 @@ class SetGatewayTransactionId implements ResolverInterface
      */
     public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
     {
-        if (empty($args['input']['gateway_transaction_id'])) {
-          throw new GraphQlInputException(__('Required parameter "gateway_transaction_id" is missing'));
-        }
-
-        $maskedCartId = $args['input']['cart_id'];
         $this->logger->debug([
-            'maskedCartId' => $maskedCartId,
+            'args' => $args,
+            'value' => $value,
           ]);
+        $maskedCartId = $args['input']['cart_id'];
         $gatewayTransactionId = $args['input']['gateway_transaction_id'];
 
         $storeId = (int)$context->getExtensionAttributes()->getStore()->getId();
