@@ -85,14 +85,14 @@ class PlaceOrder implements ResolverInterface
      */
     public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
     {
-        if (empty($args['input']['cart_id'])) {
-            throw new GraphQlInputException(__('Required parameter "cart_id" is missing'));
-        }
         if (empty($args['input']['gateway_transaction_id'])) {
           throw new GraphQlInputException(__('Required parameter "gateway_transaction_id" is missing'));
         }
 
         $maskedCartId = $args['input']['cart_id'];
+        $this->logger->debug([
+            'maskedCartId' => $maskedCartId,
+          ]);
         $gatewayTransactionId = $args['input']['gateway_transaction_id'];
 
         $storeId = (int)$context->getExtensionAttributes()->getStore()->getId();
@@ -108,12 +108,12 @@ class PlaceOrder implements ResolverInterface
 
         try {
             $cartId = $cart->getId();
-            $orderId = $this->cartManagement->placeOrder($cartId, $this->paymentMethodManagement->get($cartId));
-            $order = $this->orderRepository->get($orderId);
+            // $orderId = $this->cartManagement->placeOrder($cartId, $this->paymentMethodManagement->get($cartId));
+            // $order = $this->orderRepository->get($orderId);
 
-            $payment = $order->getPayment();
+            // $payment = $order->getPayment();
 
-            $paymentId = $payment->getId();
+            // $paymentId = $payment->getId();
             $this->logger->debug([
               'gateway_transaction_id' => $gatewayTransactionId,
               'paymentId' => $paymentId
@@ -121,9 +121,7 @@ class PlaceOrder implements ResolverInterface
 
             return [
                 'order' => [
-                    'order_number' => $order->getIncrementId(),
-                    // @deprecated The order_id field is deprecated, use order_number instead
-                    'order_id' => $order->getIncrementId(),
+                    'gateway_transaction_id' => $gatewayTransactionId
                 ],
             ];
         } catch (NoSuchEntityException $e) {

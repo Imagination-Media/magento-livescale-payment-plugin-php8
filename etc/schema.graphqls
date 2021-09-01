@@ -1,17 +1,7 @@
-type Mutation {
-    placeOrder(input: PlaceOrderInput): PlaceOrderOutput @resolver(class: "\\Livescale\\Payment\\Model\\Resolver\\PlaceOrder")
-}
-
 input PlaceOrderInput {
-    cart_id: String!
     gateway_transaction_id: String
 }
 
-type PlaceOrderOutput {
-    order: Order!
-}
-
 type Order {
-    order_number: String! @doc(description: "The unique ID for a `Order` object.")
-    order_id: String @deprecated(reason: "The order_id field is deprecated, use order_number instead.")
+    gateway_transaction_id: String @resolver(class: "\\Livescale\\Payment\\Model\\Resolver\\SetGatewayTransactionId")
 }
