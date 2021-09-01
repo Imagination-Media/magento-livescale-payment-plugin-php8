@@ -22,7 +22,7 @@ use Magento\Payment\Model\Method\Logger;
  */
 class AuthorizePayment implements ResolverInterface
 {
-      /**
+    /**
      * @var Logger
      */
     private $logger;

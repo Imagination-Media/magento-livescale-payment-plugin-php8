@@ -41,6 +41,8 @@ class AuthorizationRequest implements BuilderInterface
      */
     public function build(array $buildSubject)
     {
+        $this->logger->debug(['step' => 'authorize']);
+
         if (!isset($buildSubject['payment'])
             || !$buildSubject['payment'] instanceof PaymentDataObjectInterface
         ) {
@@ -50,20 +52,9 @@ class AuthorizationRequest implements BuilderInterface
         /** @var PaymentDataObjectInterface $payment */
         $payment = $buildSubject['payment'];
         $order = $payment->getOrder();
-        $address = $order->getShippingAddress();
-
-        $this->logger->debug(
-            [
-                'step' => 'authorize'
-            ]
-        );
 
         return [
-            'TXN_TYPE' => 'A',
-            'INVOICE' => $order->getOrderIncrementId(),
-            'AMOUNT' => $order->getGrandTotalAmount(),
-            'CURRENCY' => $order->getCurrencyCode(),
-            'EMAIL' => $address->getEmail(),
+            'TXN_TYPE' => 'A'
         ];
     }
 }

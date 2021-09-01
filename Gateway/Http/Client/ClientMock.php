@@ -44,11 +44,7 @@ class ClientMock implements ClientInterface
      */
     public function placeRequest(TransferInterface $transferObject)
     {
-        $response = $this->generateResponseForCode(
-            $this->getResultCode(
-                $transferObject
-            )
-        );
+        $response =  ['GATEWAY_TRANSACTION_ID' => '123456789'];
 
         $this->logger->debug(
             [
@@ -59,58 +55,5 @@ class ClientMock implements ClientInterface
         );
 
         return $response;
-    }
-
-    /**
-     * Generates response
-     *
-     * @return array
-     */
-    protected function generateResponseForCode($resultCode)
-    {
-
-        return array_merge(
-            [
-                'RESULT_CODE' => $resultCode,
-                'TXN_ID' => $this->generateTxnId()
-            ],
-            $this->getFieldsBasedOnResponseType($resultCode)
-        );
-    }
-
-    /**
-     * @return string
-     */
-    protected function generateTxnId()
-    {
-        return '123456789';
-    }
-
-    /**
-     * Returns result code
-     *
-     * @param TransferInterface $transfer
-     * @return int
-     */
-    private function getResultCode(TransferInterface $transfer)
-    {
-        $headers = $transfer->getHeaders();
-
-        if (isset($headers['force_result'])) {
-            return (int)$headers['force_result'];
-        }
-
-        return self::SUCCESS;
-    }
-
-    /**
-     * Returns response fields for result code
-     *
-     * @param int $resultCode
-     * @return array
-     */
-    private function getFieldsBasedOnResponseType($resultCode)
-    {
-        return [];
     }
 }
