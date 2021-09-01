@@ -90,10 +90,6 @@ class AuthorizePayment implements ResolverInterface
       ]);
 
       $payment = $quote->getPayment();
-      $order = $payment->getOrder();
-
-      $this->logger->debug('Order Id: ' . $order->getIncrementId());
-      $this->logger->debug('Order Store Id: ' . $order->getStoreId());
   
       /** @var $payment \Magento\Sales\Model\Order\Payment */
       $payment->setTransactionId($gatewayTransactionId);
