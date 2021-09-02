@@ -7,10 +7,22 @@ namespace Livescale\Payment\Gateway\Response;
 
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Response\HandlerInterface;
+use Magento\Payment\Model\Method\Logger;
 
 class TxnIdHandler implements HandlerInterface
 {
     const TXN_ID = 'TXN_ID';
+
+    /**
+     * @var Logger
+     */
+    private $logger;
+
+    public function __construct(
+        Logger $logger
+    ) {
+        $this->logger = $logger;
+    }
 
     /**
      * Handles transaction id
@@ -32,9 +44,10 @@ class TxnIdHandler implements HandlerInterface
 
         $payment = $paymentDO->getPayment();
 
-        $payment->getAdditionalInformation('gatewayTransactionId');
-        $payment->getAdditionalData('gatewayTransactionId');
+        $info = $payment->getAdditionalInformation('gatewayTransactionId');
+        $data = $payment->getAdditionalData('gatewayTransactionId');
 
+        $this->logger->debug(['info' => $info, 'data' => $data]);
         /** @var $payment \Magento\Sales\Model\Order\Payment */
         $payment->setTransactionId($response[self::TXN_ID]);
         $payment->setIsTransactionClosed(false);

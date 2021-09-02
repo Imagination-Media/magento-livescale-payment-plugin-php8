@@ -132,4 +132,11 @@
             <argument name="logger" xsi:type="object">LivescalePaymentLogger</argument>
         </arguments>
     </type>
+
+    <!-- Place Order GraphQL Mutation -->
+    <type name="Livescale\Payment\Gateway\Response\TxnIdHandler">
+        <arguments>
+            <argument name="logger" xsi:type="object">LivescalePaymentLogger</argument>
+        </arguments>
+    </type>
 </config>
