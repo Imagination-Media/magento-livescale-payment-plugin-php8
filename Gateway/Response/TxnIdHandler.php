@@ -10,6 +10,8 @@ use Magento\Payment\Gateway\Response\HandlerInterface;
 
 class TxnIdHandler implements HandlerInterface
 {
+    const TXN_ID = 'TXN_ID';
+
     /**
      * Handles transaction id
      *
@@ -24,5 +26,14 @@ class TxnIdHandler implements HandlerInterface
         ) {
             throw new \InvalidArgumentException('Payment data object should be provided');
         }
+
+        /** @var PaymentDataObjectInterface $paymentDO */
+        $paymentDO = $handlingSubject['payment'];
+
+        $payment = $paymentDO->getPayment();
+
+        /** @var $payment \Magento\Sales\Model\Order\Payment */
+        $payment->setTransactionId($response[self::TXN_ID]);
+        $payment->setIsTransactionClosed(false);
     }
 }
