@@ -45,11 +45,10 @@ class TxnIdHandler implements HandlerInterface
         $payment = $paymentDO->getPayment();
 
         $info = $payment->getAdditionalInformation('gatewayTransactionId');
-        $data = $payment->getAdditionalData('gatewayTransactionId');
 
-        $this->logger->debug(['info' => $info, 'data' => $data]);
+        $this->logger->debug(['info in txn' => $info]);
         /** @var $payment \Magento\Sales\Model\Order\Payment */
-        $payment->setTransactionId($response[self::TXN_ID]);
+        $payment->setTransactionId($info);
         $payment->setIsTransactionClosed(false);
     }
 }
