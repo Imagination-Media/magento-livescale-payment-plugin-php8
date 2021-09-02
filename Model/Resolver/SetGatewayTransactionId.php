@@ -125,8 +125,12 @@ class SetGatewayTransactionId implements ResolverInterface
             // $payment->setCcOwner();
             // $payment->setCcOwner();
             // $payment->setIsTransactionClosed(false);
-            // $payment->save();
+            $payment->save();
             // $order->setPayment($payment);
+
+            $this->logger->debug([
+                'payment' => $payment
+            ]);
 
             return [
                 'succeed' => true,
