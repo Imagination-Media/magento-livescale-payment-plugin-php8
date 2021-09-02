@@ -116,7 +116,7 @@ class SetGatewayTransactionId implements ResolverInterface
             $payment->setIsTransactionClosed(false);
 
             $payment->save();
-            // $order->setPayment($payment);
+            $order->setPayment($payment);
 
             return [
                 'succeed' => true,
