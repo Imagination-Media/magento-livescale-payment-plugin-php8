@@ -128,9 +128,10 @@ class SetGatewayTransactionId implements ResolverInterface
             $payment->save();
             // $order->setPayment($payment);
 
-            $this->logger->debug([
-                'payment' => $payment
-            ]);
+            $info = $payment->getAdditionalInformation('gatewayTransactionId');
+            $data = $payment->getAdditionalData('gatewayTransactionId');
+    
+            $this->logger->debug(['info' => $info, 'data' => $data]);
 
             return [
                 'succeed' => true,
