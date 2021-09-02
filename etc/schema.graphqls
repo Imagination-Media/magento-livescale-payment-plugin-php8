@@ -3,7 +3,7 @@ type Mutation {
 }
 
 input SetGatewayTransactionIdInput {
-    order_number: String!
+    cart_id: String!
     gateway_transaction_id: String!
 }
 
