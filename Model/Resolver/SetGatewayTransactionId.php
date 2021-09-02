@@ -105,11 +105,8 @@ class SetGatewayTransactionId implements ResolverInterface
             $order = $this->orderRepository->get($orderNumber);
 
             $payment = $order->getPayment();
-            $paymentId = $payment->getId();
-            $this->logger->debug([
-              'gateway_transaction_id' => $gatewayTransactionId,
-              'paymentId' => $paymentId
-            ]);
+            $payment->setTransactionId($gatewayTransactionId);
+            $payment->setIsTransactionClosed(false);
 
             return [
                 'succeed' => true,
