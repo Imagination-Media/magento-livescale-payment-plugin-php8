@@ -85,38 +85,48 @@ class SetGatewayTransactionId implements ResolverInterface
      */
     public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
     {
-        if (empty($args['input']['order_number'])) {
-            throw new GraphQlInputException(__('Required parameter "order_number" is missing'));
-        }
+        // if (empty($args['input']['order_number'])) {
+        //     throw new GraphQlInputException(__('Required parameter "order_number" is missing'));
+        // }
 
         if (empty($args['input']['gateway_transaction_id'])) {
             throw new GraphQlInputException(__('Required parameter "gateway_transaction_id" is missing'));
         }
 
-        $orderNumber = $args['input']['order_number'];
+        // $orderNumber = $args['input']['order_number'];
         $gatewayTransactionId = $args['input']['gateway_transaction_id'];
 
-        $this->logger->debug([
-            'orderNumber' => $orderNumber,
-            'gateway_transaction_id' => $gatewayTransactionId
-          ]);
+        // $this->logger->debug([
+        //     'orderNumber' => $orderNumber,
+        //     'gateway_transaction_id' => $gatewayTransactionId
+        //   ]);
+
+        if (empty($args['input']['cart_id'])) {
+            throw new GraphQlInputException(__('Required parameter "cart_id" is missing'));
+        }
+        $maskedCartId = $args['input']['cart_id'];
+
+        $currentUserId = $context->getUserId();
+        $storeId = (int)$context->getExtensionAttributes()->getStore()->getId();
+        $cart = $this->getCartForUser->execute($maskedCartId, $currentUserId, $storeId);
 
         try {
-            $order = $this->orderRepository->get($orderNumber);
+            // $order = $this->orderRepository->get($orderNumber);
 
-            $payment = $order->getPayment();
-
-            $payment->setTransactionId($gatewayTransactionId);
+            // $payment = $order->getPayment();
+            $payment = $cart->getPayment();
+            $payment->setAdditionalInformation('gatewayTransactionId', $gatewayTransactionId);
+            $payment->setAdditionalData('gatewayTransactionId', $gatewayTransactionId);
+            // $payment->setTransactionId($gatewayTransactionId);
             // $payment->setAmountAuthorized();
             // $payment->setCcExpMonth();
             // $payment->setCcExpYear();
             // $payment->setCcLast4();
             // $payment->setCcOwner();
             // $payment->setCcOwner();
-            $payment->setIsTransactionClosed(false);
-
-            $payment->save();
-            $order->setPayment($payment);
+            // $payment->setIsTransactionClosed(false);
+            // $payment->save();
+            // $order->setPayment($payment);
 
             return [
                 'succeed' => true,
