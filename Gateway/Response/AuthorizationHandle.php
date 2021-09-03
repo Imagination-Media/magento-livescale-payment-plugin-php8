@@ -42,18 +42,30 @@ class AuthorizationHandle implements HandlerInterface
 
         $payment = $paymentDO->getPayment();
 
-        $transactionId = $payment->getAdditionalInformation('gatewayTransactionId');
-        $ccExpirationMonth = $payment->setAdditionalInformation('ccExpirationMonth');
-        $ccExpirationYear = $payment->setAdditionalInformation('ccExpirationYear');
-        $ccLast4 = $payment->setAdditionalInformation('ccLast4');
-        $ccHolder = $payment->setAdditionalInformation('ccHolder');
+        if ($payment->hasAdditionalInformation('ccExpirationMonth')) {
+            $ccExpirationMonth = $payment->setAdditionalInformation('ccExpirationMonth');
+            $payment->setCcExpMonth($ccExpirationMonth);
+        }
 
-        /** @var $payment \Magento\Sales\Model\Order\Payment */
-        $payment->setTransactionId($transactionId);
-        $payment->setCcExpMonth($ccExpirationMonth);
-        $payment->setCcExpYear($ccExpirationYear);
-        $payment->setCcLast4($ccLast4);
-        $payment->setCcOwner($ccHolder);
-        $payment->setIsTransactionClosed(false);
+        if ($payment->hasAdditionalInformation('ccExpirationYear')) {
+            $ccExpirationYear = $payment->setAdditionalInformation('ccExpirationYear');
+            $payment->setCcExpYear($ccExpirationYear);
+        }
+
+        if ($payment->hasAdditionalInformation('ccLast4')) {
+            $ccLast4 = $payment->setAdditionalInformation('ccLast4');
+            $payment->setCcLast4($ccLast4);
+        }
+
+        if ($payment->hasAdditionalInformation('ccHolder')) {
+            $ccHolder = $payment->setAdditionalInformation('ccHolder');
+            $payment->setCcOwner($ccHolder);
+        }
+ 
+        if ($payment->hasAdditionalInformation('gatewayTransactionId')) {
+            $transactionId = $payment->getAdditionalInformation('gatewayTransactionId');
+            $payment->setTransactionId($transactionId);
+            $payment->setIsTransactionClosed(false);
+        }
     }
 }
