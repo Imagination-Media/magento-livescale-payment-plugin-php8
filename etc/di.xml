@@ -119,7 +119,7 @@
     <virtualType name="LivescalePaymentVoidCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
         <arguments>
             <argument name="requestBuilder" xsi:type="object">Livescale\Payment\Gateway\Request\VoidRequest</argument>
-            <argument name="handler" xsi:type="object">Livescale\Payment\Gateway\Response\VoidHandler</argument>
+            <argument name="handler" xsi:type="object">Livescale\Payment\Gateway\Response\VoidHandle</argument>
             <argument name="transferFactory" xsi:type="object">Livescale\Payment\Gateway\Http\TransferFactory</argument>
             <argument name="validator" xsi:type="object">Livescale\Payment\Gateway\Validator\ResponseCodeValidator</argument>
             <argument name="client" xsi:type="object">Livescale\Payment\Gateway\Http\Client\ClientMock</argument>
@@ -130,11 +130,12 @@
     <type name="Livescale\Payment\Gateway\Request\VoidRequest">
         <arguments>
             <argument name="config" xsi:type="object">LivescalePaymentConfig</argument>
+            <argument name="logger" xsi:type="object">LivescalePaymentLogger</argument>
         </arguments>
     </type>
 
     <!-- Void Handle GraphQL Mutation -->
-    <type name="Livescale\Payment\Gateway\Response\VoidHande">
+    <type name="Livescale\Payment\Gateway\Response\VoidHandle">
         <arguments>
             <argument name="logger" xsi:type="object">LivescalePaymentLogger</argument>
         </arguments>
