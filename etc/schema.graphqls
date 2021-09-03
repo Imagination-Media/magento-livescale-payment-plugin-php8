@@ -13,5 +13,5 @@ input SetGatewayTransactionInput {
 }
 
 type SetGatewayTransactionOutput {
-    succeed: Boolean!
+    cart: Cart!
 }

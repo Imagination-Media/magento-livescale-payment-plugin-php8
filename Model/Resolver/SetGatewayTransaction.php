@@ -14,11 +14,7 @@ use Magento\Framework\GraphQl\Exception\GraphQlInputException;
 use Magento\Framework\GraphQl\Exception\GraphQlNoSuchEntityException;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
-use Magento\Quote\Api\CartManagementInterface;
-use Magento\Quote\Api\PaymentMethodManagementInterface;
 use Magento\QuoteGraphQl\Model\Cart\GetCartForUser;
-use Magento\Sales\Api\OrderRepositoryInterface;
-use Magento\QuoteGraphQl\Model\Cart\CheckCartCheckoutAllowance;
 
 use Magento\Payment\Model\Method\Logger;
 
@@ -33,51 +29,19 @@ class SetGatewayTransaction implements ResolverInterface
     private $logger;
 
     /**
-     * @var CartManagementInterface
-     */
-    private $cartManagement;
-
-    /**
      * @var GetCartForUser
      */
     private $getCartForUser;
 
     /**
-     * @var OrderRepositoryInterface
-     */
-    private $orderRepository;
-
-    /**
-     * @var CheckCartCheckoutAllowance
-     */
-    private $checkCartCheckoutAllowance;
-
-    /**
-     * @var PaymentMethodManagementInterface
-     */
-    private $paymentMethodManagement;
-
-    /**
      * @param GetCartForUser $getCartForUser
-     * @param CartManagementInterface $cartManagement
-     * @param OrderRepositoryInterface $orderRepository
-     * @param CheckCartCheckoutAllowance $checkCartCheckoutAllowance
-     * @param PaymentMethodManagementInterface $paymentMethodManagement
      */
     public function __construct(
         Logger $logger,
-        GetCartForUser $getCartForUser,
-        CartManagementInterface $cartManagement,
-        OrderRepositoryInterface $orderRepository,
-        CheckCartCheckoutAllowance $checkCartCheckoutAllowance,
-        PaymentMethodManagementInterface $paymentMethodManagement
+        GetCartForUser $getCartForUser
     ) {
         $this->logger = $logger;
         $this->getCartForUser = $getCartForUser;
-        $this->cartManagement = $cartManagement;
-        $this->orderRepository = $orderRepository;
-        $this->checkCartCheckoutAllowance = $checkCartCheckoutAllowance;
-        $this->paymentMethodManagement = $paymentMethodManagement;
     }
 
     /**
@@ -133,7 +97,9 @@ class SetGatewayTransaction implements ResolverInterface
             $payment->save();
 
             return [
-                'succeed' => true,
+                'cart' => [
+                    'model' => $cart,
+                ],
             ];
         } catch (NoSuchEntityException $e) {
             throw new GraphQlNoSuchEntityException(__($e->getMessage()), $e);
