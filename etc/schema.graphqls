@@ -5,6 +5,7 @@ type Mutation {
 input SetGatewayTransactionInput {
     cart_id: String!
     gateway_transaction_id: String!
+    cc_type: String
     cc_expiration_month: String
     cc_expiration_year: String
     cc_last_4: String

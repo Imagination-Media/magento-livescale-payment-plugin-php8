@@ -105,6 +105,11 @@ class SetGatewayTransaction implements ResolverInterface
 
             $payment->setAdditionalInformation('gatewayTransactionId', $gatewayTransactionId);
 
+            if (isset($args['input']['cc_type'])) {
+                $ccType = $args['input']['cc_type'];
+                $payment->setAdditionalInformation('ccType', $ccType);
+            }
+
             if (isset($args['input']['cc_expiration_month'])) {
                 $ccExpirationMonth = $args['input']['cc_expiration_month'];
                 $payment->setAdditionalInformation('ccExpirationMonth', $ccExpirationMonth);
