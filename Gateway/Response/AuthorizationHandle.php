@@ -31,6 +31,7 @@ class AuthorizationHandle implements HandlerInterface
      */
     public function handle(array $handlingSubject, array $response)
     {
+        $this->logger->debug(['step' => 'authorizeHandle']);
         if (!isset($handlingSubject['payment'])
             || !$handlingSubject['payment'] instanceof PaymentDataObjectInterface
         ) {

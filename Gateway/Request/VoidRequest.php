@@ -8,7 +8,7 @@ namespace Livescale\Payment\Gateway\Request;
 use Magento\Payment\Gateway\ConfigInterface;
 use Magento\Payment\Gateway\Request\BuilderInterface;
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
-use Magento\Sales\Api\Data\OrderPaymentInterface;
+use Magento\Payment\Model\Method\Logger;
 
 class VoidRequest implements BuilderInterface
 {
@@ -18,12 +18,19 @@ class VoidRequest implements BuilderInterface
     private $config;
 
     /**
+     * @var Logger
+     */
+    private $logger;
+
+    /**
      * @param ConfigInterface $config
      */
     public function __construct(
-        ConfigInterface $config
+        ConfigInterface $config,
+        Logger $logger
     ) {
         $this->config = $config;
+        $this->logger = $logger;
     }
 
     /**
@@ -34,27 +41,14 @@ class VoidRequest implements BuilderInterface
      */
     public function build(array $buildSubject)
     {
+        $this->logger->debug(['step' => 'voidRequest']);
+
         if (!isset($buildSubject['payment'])
             || !$buildSubject['payment'] instanceof PaymentDataObjectInterface
         ) {
             throw new \InvalidArgumentException('Payment data object should be provided');
         }
 
-        /** @var PaymentDataObjectInterface $paymentDO */
-        $paymentDO = $buildSubject['payment'];
-
-        $order = $paymentDO->getOrder();
-        $payment = $paymentDO->getPayment();
-
-        if (!$payment instanceof OrderPaymentInterface) {
-            throw new \LogicException('Order payment should be provided.');
-        }
-
-        $this->logger->debug(['step' => 'voidRequest']);
-
-        return [
-            'TXN_TYPE' => 'V',
-            'TXN_ID' => $payment->getLastTransId(),
-        ];
+        return [];
     }
 }

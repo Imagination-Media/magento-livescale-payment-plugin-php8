@@ -31,6 +31,8 @@ class CaptureHandle implements HandlerInterface
      */
     public function handle(array $handlingSubject, array $response)
     {
+        $this->logger->debug(['step' => 'captureHandle']);
+
         if (!isset($handlingSubject['payment'])
             || !$handlingSubject['payment'] instanceof PaymentDataObjectInterface
         ) {

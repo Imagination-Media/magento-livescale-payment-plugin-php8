@@ -42,28 +42,14 @@ class CaptureRequest implements BuilderInterface
      */
     public function build(array $buildSubject)
     {
+        $this->logger->debug(['step' => 'captureRequest']);
+
         if (!isset($buildSubject['payment'])
             || !$buildSubject['payment'] instanceof PaymentDataObjectInterface
         ) {
             throw new \InvalidArgumentException('Payment data object should be provided');
         }
 
-        /** @var PaymentDataObjectInterface $paymentDO */
-        $paymentDO = $buildSubject['payment'];
-
-        $order = $paymentDO->getOrder();
-
-        $payment = $paymentDO->getPayment();
-
-        $this->logger->debug(['step' => 'capture']);
-
-        if (!$payment instanceof OrderPaymentInterface) {
-            throw new \LogicException('Order payment should be provided.');
-        }
-
-        return [
-            'TXN_TYPE' => 'S',
-            'TXN_ID' => $payment->getLastTransId(),
-        ];
+        return [];
     }
 }
