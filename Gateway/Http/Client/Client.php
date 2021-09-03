@@ -18,6 +18,11 @@ class Client implements ClientInterface
      */
     public function placeRequest(TransferInterface $transferObject)
     {
-        return 1;
+        return array_merge(
+            [
+                'RESULT_CODE' => 1,
+            ],
+            []
+        );
     }
 }
