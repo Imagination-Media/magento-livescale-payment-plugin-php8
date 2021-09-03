@@ -48,8 +48,6 @@ class AuthorizationHandle implements HandlerInterface
         $ccLast4 = $payment->setAdditionalInformation('ccLast4');
         $ccHolder = $payment->setAdditionalInformation('ccHolder');
 
-        $this->logger->debug(['ccExpirationMonth' => $ccExpirationMonth]);
-
         /** @var $payment \Magento\Sales\Model\Order\Payment */
         $payment->setTransactionId($transactionId);
         $payment->setCcExpMonth($ccExpirationMonth);
