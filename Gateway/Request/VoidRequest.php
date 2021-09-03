@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright © 2016 Magento. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright © 2021 Livescale. All rights reserved.
+ * See LICENSE for license details.
  */
 namespace Livescale\Payment\Gateway\Request;
 
@@ -41,8 +41,6 @@ class VoidRequest implements BuilderInterface
      */
     public function build(array $buildSubject)
     {
-        $this->logger->debug(['step' => 'voidRequest']);
-
         if (!isset($buildSubject['payment'])
             || !$buildSubject['payment'] instanceof PaymentDataObjectInterface
         ) {

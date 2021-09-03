@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright © 2016 Magento. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright © 2021 Livescale. All rights reserved.
+ * See LICENSE for license details.
  */
 namespace Livescale\Payment\Gateway\Response;
 
@@ -30,9 +30,7 @@ class VoidHandle implements HandlerInterface
      * @return void
      */
     public function handle(array $handlingSubject, array $response)
-    {
-      $this->logger->debug(['step' => 'voidHandle']);
-      
+    {    
       if (!isset($handlingSubject['payment'])
           || !$handlingSubject['payment'] instanceof PaymentDataObjectInterface
       ) {

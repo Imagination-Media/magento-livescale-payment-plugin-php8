@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <!--
 /**
- * Copyright © 2016 Magento. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright © 2021 Livescale. All rights reserved.
+ * See LICENSE for license details.
  */
 -->
 
@@ -110,6 +110,7 @@
     </type>
 
     <!-- Void command -->
+    <!-- This command is not used right now. We use the out of the box void command -->
     <virtualType name="LivescalePaymentVoidCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
         <arguments>
             <argument name="requestBuilder" xsi:type="object">Livescale\Payment\Gateway\Request\VoidRequest</argument>

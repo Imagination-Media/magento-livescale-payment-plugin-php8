@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * Copyright © 2021 Livescale. All rights reserved.
+ * See LICENSE for license details.
  */
 declare(strict_types=1);
 
