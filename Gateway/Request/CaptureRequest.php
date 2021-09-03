@@ -55,11 +55,7 @@ class CaptureRequest implements BuilderInterface
 
         $payment = $paymentDO->getPayment();
 
-        $this->logger->debug(
-            [
-                'step' => 'capture'
-            ]
-        );
+        $this->logger->debug(['step' => 'capture']);
 
         if (!$payment instanceof OrderPaymentInterface) {
             throw new \LogicException('Order payment should be provided.');
