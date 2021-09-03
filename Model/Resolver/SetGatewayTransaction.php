@@ -25,7 +25,7 @@ use Magento\Payment\Model\Method\Logger;
 /**
  * @inheritdoc
  */
-class SetGatewayTransactionId implements ResolverInterface
+class SetGatewayTransaction implements ResolverInterface
 {
     /**
      * @var Logger
@@ -85,52 +85,36 @@ class SetGatewayTransactionId implements ResolverInterface
      */
     public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
     {
-        // if (empty($args['input']['order_number'])) {
-        //     throw new GraphQlInputException(__('Required parameter "order_number" is missing'));
-        // }
+        if (empty($args['input']['cart_id'])) {
+            throw new GraphQlInputException(__('Required parameter "cart_id" is missing'));
+        }
 
         if (empty($args['input']['gateway_transaction_id'])) {
             throw new GraphQlInputException(__('Required parameter "gateway_transaction_id" is missing'));
         }
 
-        // $orderNumber = $args['input']['order_number'];
-        $gatewayTransactionId = $args['input']['gateway_transaction_id'];
-
-        // $this->logger->debug([
-        //     'orderNumber' => $orderNumber,
-        //     'gateway_transaction_id' => $gatewayTransactionId
-        //   ]);
-
-        if (empty($args['input']['cart_id'])) {
-            throw new GraphQlInputException(__('Required parameter "cart_id" is missing'));
-        }
         $maskedCartId = $args['input']['cart_id'];
+        $gatewayTransactionId = $args['input']['gateway_transaction_id'];
+        $ccExpirationMonth = $args['input']['cc_expiration_month'];
+        $ccExpirationYear = $args['input']['cc_expiration_year'];
+        $ccLast4 = $args['input']['cc_last_4'];
+        $ccHolder = $args['input']['cc_holder'];
+        
 
         $currentUserId = $context->getUserId();
         $storeId = (int)$context->getExtensionAttributes()->getStore()->getId();
         $cart = $this->getCartForUser->execute($maskedCartId, $currentUserId, $storeId);
 
         try {
-            // $order = $this->orderRepository->get($orderNumber);
-
-            // $payment = $order->getPayment();
             $payment = $cart->getPayment();
-            $payment->setAdditionalInformation('gatewayTransactionId', $gatewayTransactionId);
-            $payment->setAdditionalData('gatewayTransactionId', $gatewayTransactionId);
-            // $payment->setTransactionId($gatewayTransactionId);
-            // $payment->setAmountAuthorized();
-            // $payment->setCcExpMonth();
-            // $payment->setCcExpYear();
-            // $payment->setCcLast4();
-            // $payment->setCcOwner();
-            // $payment->setCcOwner();
-            // $payment->setIsTransactionClosed(false);
-            $payment->save();
-            // $order->setPayment($payment);
 
-            $info = $payment->getAdditionalInformation('gatewayTransactionId');
-    
-            $this->logger->debug(['info in set' => $info]);
+            $payment->setAdditionalInformation('gatewayTransactionId', $gatewayTransactionId);
+            $payment->setAdditionalInformation('ccExpirationMonth', $ccExpirationMonth);
+            $payment->setAdditionalInformation('ccExpirationYear', $ccExpirationYear);
+            $payment->setAdditionalInformation('ccLast4', $ccLast4);
+            $payment->setAdditionalInformation('ccHolder', $ccHolder);
+
+            $payment->save();
 
             return [
                 'succeed' => true,

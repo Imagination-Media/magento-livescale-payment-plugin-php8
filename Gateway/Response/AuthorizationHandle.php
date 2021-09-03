@@ -9,10 +9,8 @@ use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Response\HandlerInterface;
 use Magento\Payment\Model\Method\Logger;
 
-class TxnIdHandler implements HandlerInterface
+class AuthorizationHandle implements HandlerInterface
 {
-    const TXN_ID = 'TXN_ID';
-
     /**
      * @var Logger
      */
@@ -44,11 +42,18 @@ class TxnIdHandler implements HandlerInterface
 
         $payment = $paymentDO->getPayment();
 
-        $info = $payment->getAdditionalInformation('gatewayTransactionId');
+        $transactionId = $payment->getAdditionalInformation('gatewayTransactionId');
+        $ccExpirationMonth = $payment->setAdditionalInformation('ccExpirationMonth');
+        $ccExpirationYear = $payment->setAdditionalInformation('ccExpirationYear');
+        $ccLast4 = $payment->setAdditionalInformation('ccLast4');
+        $ccHolder = $payment->setAdditionalInformation('ccHolder');
 
-        $this->logger->debug(['info in txn' => $info]);
         /** @var $payment \Magento\Sales\Model\Order\Payment */
-        $payment->setTransactionId($info);
+        $payment->setTransactionId($transactionId);
+        $payment->setCcExpMonth($ccExpirationMonth);
+        $payment->setCcExpYear($ccExpirationYear);
+        $payment->setCcLast4($ccLast4);
+        $payment->setCcOwner($ccHolder);
         $payment->setIsTransactionClosed(false);
     }
 }

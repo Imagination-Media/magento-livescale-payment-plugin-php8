@@ -1,12 +1,16 @@
 type Mutation {
-    setGatewayTransactionId(input: SetGatewayTransactionIdInput): SetGatewayTransactionIdOutput @resolver(class: "\\Livescale\\Payment\\Model\\Resolver\\SetGatewayTransactionId")
+    setGatewayTransaction(input: SetGatewayTransactionInput): SetGatewayTransactionOutput @resolver(class: "\\Livescale\\Payment\\Model\\Resolver\\SetGatewayTransaction")
 }
 
-input SetGatewayTransactionIdInput {
+input SetGatewayTransactionInput {
     cart_id: String!
     gateway_transaction_id: String!
+    cc_expiration_month: String
+    cc_expiration_year: String
+    cc_last_4: String
+    cc_holder: String
 }
 
-type SetGatewayTransactionIdOutput {
+type SetGatewayTransactionOutput {
     succeed: Boolean!
 }
