@@ -105,26 +105,26 @@ class SetGatewayTransaction implements ResolverInterface
 
             $payment->setAdditionalInformation('gatewayTransactionId', $gatewayTransactionId);
 
-            if (!isset($args['input']['cc_expiration_month'])) {
+            if (isset($args['input']['cc_expiration_month'])) {
                 $ccExpirationMonth = $args['input']['cc_expiration_month'];
                 $payment->setAdditionalInformation('ccExpirationMonth', $ccExpirationMonth);
             }
 
-            if (!isset($args['input']['cc_expiration_year'])) {
+            if (isset($args['input']['cc_expiration_year'])) {
                 $ccExpirationYear = $args['input']['cc_expiration_year'];
                 $payment->setAdditionalInformation('ccExpirationYear', $ccExpirationYear);
             }
             
-            if (!isset($args['input']['cc_last_4'])) {
+            if (isset($args['input']['cc_last_4'])) {
                 $ccLast4 = $args['input']['cc_last_4'];
                 $payment->setAdditionalInformation('ccLast4', $ccLast4);
             }
 
-            if (!isset($args['input']['cc_holder'])) {
+            if (isset($args['input']['cc_holder'])) {
                 $ccHolder = $args['input']['cc_holder'];
                 $payment->setAdditionalInformation('ccHolder', $ccHolder);
             }
-            
+
             $payment->save();
 
             return [
