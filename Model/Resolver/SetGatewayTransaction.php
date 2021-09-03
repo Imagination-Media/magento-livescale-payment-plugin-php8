@@ -95,11 +95,6 @@ class SetGatewayTransaction implements ResolverInterface
 
         $maskedCartId = $args['input']['cart_id'];
         $gatewayTransactionId = $args['input']['gateway_transaction_id'];
-        $ccExpirationMonth = $args['input']['cc_expiration_month'];
-        $ccExpirationYear = $args['input']['cc_expiration_year'];
-        $ccLast4 = $args['input']['cc_last_4'];
-        $ccHolder = $args['input']['cc_holder'];
-        
 
         $currentUserId = $context->getUserId();
         $storeId = (int)$context->getExtensionAttributes()->getStore()->getId();
@@ -109,11 +104,27 @@ class SetGatewayTransaction implements ResolverInterface
             $payment = $cart->getPayment();
 
             $payment->setAdditionalInformation('gatewayTransactionId', $gatewayTransactionId);
-            $payment->setAdditionalInformation('ccExpirationMonth', $ccExpirationMonth);
-            $payment->setAdditionalInformation('ccExpirationYear', $ccExpirationYear);
-            $payment->setAdditionalInformation('ccLast4', $ccLast4);
-            $payment->setAdditionalInformation('ccHolder', $ccHolder);
 
+            if (!isset($args['input']['cc_expiration_month'])) {
+                $ccExpirationMonth = $args['input']['cc_expiration_month'];
+                $payment->setAdditionalInformation('ccExpirationMonth', $ccExpirationMonth);
+            }
+
+            if (!isset($args['input']['cc_expiration_year'])) {
+                $ccExpirationYear = $args['input']['cc_expiration_year'];
+                $payment->setAdditionalInformation('ccExpirationYear', $ccExpirationYear);
+            }
+            
+            if (!isset($args['input']['cc_last_4'])) {
+                $ccLast4 = $args['input']['cc_last_4'];
+                $payment->setAdditionalInformation('ccLast4', $ccLast4);
+            }
+
+            if (!isset($args['input']['cc_holder'])) {
+                $ccHolder = $args['input']['cc_holder'];
+                $payment->setAdditionalInformation('ccHolder', $ccHolder);
+            }
+            
             $payment->save();
 
             return [
