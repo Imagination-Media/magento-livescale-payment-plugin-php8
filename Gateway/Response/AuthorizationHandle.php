@@ -43,27 +43,27 @@ class AuthorizationHandle implements HandlerInterface
         $payment = $paymentDO->getPayment();
 
         if ($payment->hasAdditionalInformation('ccType')) {
-            $ccType = $payment->setAdditionalInformation('ccType');
+            $ccType = $payment->getAdditionalInformation('ccType');
             $payment->setCcType($ccType);
         }
 
         if ($payment->hasAdditionalInformation('ccExpirationMonth')) {
-            $ccExpirationMonth = $payment->setAdditionalInformation('ccExpirationMonth');
+            $ccExpirationMonth = $payment->getAdditionalInformation('ccExpirationMonth');
             $payment->setCcExpMonth($ccExpirationMonth);
         }
 
         if ($payment->hasAdditionalInformation('ccExpirationYear')) {
-            $ccExpirationYear = $payment->setAdditionalInformation('ccExpirationYear');
+            $ccExpirationYear = $payment->getAdditionalInformation('ccExpirationYear');
             $payment->setCcExpYear($ccExpirationYear);
         }
 
         if ($payment->hasAdditionalInformation('ccLast4')) {
-            $ccLast4 = $payment->setAdditionalInformation('ccLast4');
+            $ccLast4 = $payment->getAdditionalInformation('ccLast4');
             $payment->setCcLast4($ccLast4);
         }
 
         if ($payment->hasAdditionalInformation('ccHolder')) {
-            $ccHolder = $payment->setAdditionalInformation('ccHolder');
+            $ccHolder = $payment->getAdditionalInformation('ccHolder');
             $payment->setCcOwner($ccHolder);
         }
  
