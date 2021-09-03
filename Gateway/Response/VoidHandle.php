@@ -9,7 +9,7 @@ use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Response\HandlerInterface;
 use Magento\Payment\Model\Method\Logger;
 
-class CaptureHandle implements HandlerInterface
+class VoidHandle implements HandlerInterface
 {
     /**
      * @var Logger

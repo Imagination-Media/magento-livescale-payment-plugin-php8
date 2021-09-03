@@ -109,7 +109,7 @@
     </type>
 
     <!-- Capture Handle GraphQL Mutation -->
-    <type name="Livescale\Payment\Gateway\Response\CaptureHande">
+    <type name="Livescale\Payment\Gateway\Response\CaptureHandle">
         <arguments>
             <argument name="logger" xsi:type="object">LivescalePaymentLogger</argument>
         </arguments>
