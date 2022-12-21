@@ -1,5 +1,5 @@
 {
-  "name": "livescale/magento-livescale-payment-plugin",
+  "name": "livescale/magento-livescale-payment-plugin-php8",
   "description": "Magento Livescale Payment Plugin",
   "keywords": [
     "magento2",
